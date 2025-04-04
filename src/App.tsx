@@ -1,10 +1,46 @@
 import './App.css';
-import ContextPage from './06.useContext/ContextPage';
 
-export default function App(){
-  return(
-    <>
-      <ContextPage />
-    </>
-  );
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import HomePage from './pages/home.tsx';
+import NotFound from './pages/not-found.tsx';
+import { NowPlayMovies, PopularMovies, TopRatedMovies, UpcomingMovies } from './pages/movies.tsx';
+import RootLayout from './layout/root-layout.tsx';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />
+      },
+      {
+        path: 'movies/popular',
+        element: <PopularMovies />
+      },
+      {
+        path: 'movies/upcoming',
+        element:<UpcomingMovies/>,
+      },
+      {
+        path: 'movies/top_rated',
+        element:<TopRatedMovies/>,
+      },
+      {
+        path: 'movies/now_playing',
+        element:<NowPlayMovies/>,
+      },
+      
+    ]
+  }
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
 }
+
+export default App;
+
