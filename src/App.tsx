@@ -6,6 +6,8 @@ import HomePage from './pages/home.tsx';
 import NotFound from './pages/not-found.tsx';
 import { NowPlayMovies, PopularMovies, TopRatedMovies, UpcomingMovies } from './pages/movies.tsx';
 import RootLayout from './layout/root-layout.tsx';
+import MovieDetailPage from './pages/movieDetail.tsx';
+
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'movies/now_playing',
         element:<NowPlayMovies/>,
+      },
+      {
+        path: 'movies/:movieId',
+        element: <MovieDetailPage/>,
       },
       
     ]

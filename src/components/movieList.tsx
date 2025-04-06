@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Movie, MovieResponse } from '../types/movie';
 import { CustomButton } from './custom-button';
-import HomePage from '../pages/home';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 
 interface MovieListProps {
   title: string;
@@ -23,9 +22,6 @@ export const MovieList = ({ title, endpoint }: MovieListProps) => {
       try {
         setIsLoading(true);
         setError(null);
-
-        // ✅ 테스트용 로딩 지연 (캡처 목적)
-        await new Promise((res) => setTimeout(res, 2000));
 
         const { data } = await axios.get<MovieResponse>(
           `https://api.themoviedb.org/3/movie/${endpoint}?language=ko-KR&page=${page}`,
@@ -92,15 +88,19 @@ export const MovieList = ({ title, endpoint }: MovieListProps) => {
             key={movie.id}
             className="relative overflow-hidden rounded-2xl shadow-lg group bg-white"
           >
+
+          <Link to={`/movies/${movie.id}`}>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               className="rounded-2xl w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+            <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 cursor-pointer">
               <h2 className="text-black text-lg font-bold mb-2">{movie.title}</h2>
               <p className="text-black text-sm line-clamp-3">{movie.overview}</p>
             </div>
+          </Link>
+
           </li>
         ))}
       </ul>
